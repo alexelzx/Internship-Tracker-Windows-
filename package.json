@@ -1,0 +1,60 @@
+{
+  "name": "stage-internship-tracker",
+  "version": "1.0.0",
+  "description": "A calm desktop tracker for internship outreach.",
+  "main": "main.js",
+  "author": "Alexios ELIZALDE XIROKOSTA",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build": "npm run package",
+    "package": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1",
+    "package:installer": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1",
+    "package:portable": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1"
+  },
+  "build": {
+    "appId": "com.stage.internship-tracker",
+    "productName": "Stage",
+    "artifactName": "Stage-${version}-${arch}.${ext}",
+    "compression": "maximum",
+    "asar": true,
+    "directories": {
+      "output": "release-final",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": ["nsis", "portable"],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "include": "build/installer.nsh",
+      "installerSidebar": "build/installer-sidebar.bmp",
+      "installerHeader": "build/installer-header.bmp",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Stage",
+      "menuCategory": "Productivity",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "installerLanguages": "en-US",
+      "language": 1033,
+      "license": "LICENSE"
+    },
+    "portable": {
+      "artifactName": "Stage-${version}-portable.${ext}"
+    }
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0"
+  }
+}
